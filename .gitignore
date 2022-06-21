@@ -1,0 +1,12 @@
+raw_data_viewer
+Rootfiles/*
+obj/*
+moc/*
+lib/*
+xb_analysis/
+.qmake.stash
+examples/obj/*
+examples/raw.eps
+examples/raw.png
+examples/raw.root
+examples/test
