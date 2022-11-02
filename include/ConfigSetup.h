@@ -3,11 +3,12 @@
 
 namespace config_setup {
 
-const int nRow = 15;  //  rows per canvas
-const int nCol = 11; //  columns per canvas
+const int nRow = 4;  //  rows per canvas
+const int nCol = 4; //  columns per canvas
 
 #define USE_SSP     // ssp setup use this
 //#define USE_VME     // vme setup use this
+//#define USE_SRS
 
 };
 

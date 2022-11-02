@@ -10,3 +10,5 @@ examples/raw.eps
 examples/raw.png
 examples/raw.root
 examples/test
+scripts/data
+scripts/tmp_plots

@@ -50,6 +50,7 @@ private:
 
     // timing
     std::unordered_map<MPDAddress, std::pair<uint64_t, uint32_t>> mMPDTimingData;
+    uint32_t trigger_time_l, trigger_time_h;
 };
 
 #endif

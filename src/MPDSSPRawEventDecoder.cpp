@@ -31,6 +31,8 @@ MPDSSPRawEventDecoder::MPDSSPRawEventDecoder()
                             -1, // mpd id   = fiber id
                             -1);// adc ch   = apv id
     vStripADC.clear();
+
+    trigger_time_l = 0, trigger_time_h = 0;
 }
 
 ////////////////////////////////////////////////////////////////
@@ -75,6 +77,20 @@ void MPDSSPRawEventDecoder::DecodeAPV(const uint32_t *pBuf, uint32_t fBufLen,
         // get crate id
         apvAddress.crate_id = vTagTrack[1];
 
+        // get timing information
+        MPDAddress mpdAddress(apvAddress.crate_id, apvAddress.mpd_id);
+        if(mMPDTimingData.find(mpdAddress) != mMPDTimingData.end())
+        {
+            if(mMPDTimingData[mpdAddress].first != (uint64_t)trigger_time_h ||
+                    mMPDTimingData[mpdAddress].second != trigger_time_l )
+            {
+                std::cout<<__func__<<": WARNING: Found inconsistent mpd timing count."
+                         <<std::endl;
+            }
+        } else {
+            mMPDTimingData[mpdAddress] = std::pair<uint64_t, uint32_t>((uint64_t)trigger_time_h, trigger_time_l);
+        }
+
         // reorganize data into time sample format
         if(mAPVData.find(apvAddress) == mAPVData.end())
             mAPVData[apvAddress].resize(SSP_TIME_SAMPLE * TS_PERIOD_LEN, 0);
@@ -116,6 +132,7 @@ const std::unordered_map<APVAddress, std::vector<int>> & MPDSSPRawEventDecoder::
 void MPDSSPRawEventDecoder::Clear()
 {
     mAPVData.clear();
+    mMPDTimingData.clear();
 }
 
 // a helper to get negative values
@@ -202,6 +219,7 @@ void MPDSSPRawEventDecoder::sspApvDataDecode(const uint32_t &data)
                     //        d.bf.trigger_time_l);
 
                     time_last = 1;
+                    trigger_time_l = (uint32_t)d.bf.trigger_time_l;
                 }
                 else
                 {
@@ -216,6 +234,7 @@ void MPDSSPRawEventDecoder::sspApvDataDecode(const uint32_t &data)
                     //    printf("%8X - TRIGGER TIME - (ERROR)\n", data);
 
                     time_last = 0;
+                    trigger_time_h = (uint32_t)d.bf.trigger_time_h;
                 }
                 break;
             }

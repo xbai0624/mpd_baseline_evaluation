@@ -8,7 +8,9 @@ TARGET = raw_data_viewer
 CONFIG += Qt
 QT += core gui widgets
 
-QMAKE_CXXFLAGS = -std=c++11
+QMAKE_CXXFLAGS += -std=c++17
+QMAKE_CXXFLAGS -= -std=gnu++11
+
 
 # self headers
 INCLUDEPATH += . ./include
