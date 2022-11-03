@@ -62,6 +62,7 @@ HEADERS += include/EvioFileReader.h \
            include/GEMStruct.h \
            include/ConfigSetup.h \
            include/Globals.h \
+           include/SRSRawEventDecoder.h \
 
 SOURCES += src/EvioFileReader.cpp \ 
            src/EventParser.cpp \ 
@@ -78,3 +79,4 @@ SOURCES += src/EvioFileReader.cpp \
            src/GEMReplay.cpp \
            src/APVStripMapping.cpp \
            src/Globals.cpp \
+           src/SRSRawEventDecoder.cpp \

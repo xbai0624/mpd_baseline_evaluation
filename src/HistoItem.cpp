@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#define ROTATE_X_LABEL
+
 ////////////////////////////////////////////////////////////////////////////////
 // ctor
 
@@ -182,7 +184,15 @@ void HistoItem::DrawAxisMarks(QPainter *painter)
             QString ss = label(data_x_min, data_x_max, area_x1, area_x2, x_pos);
             int font_width = fm.width(ss);
             int font_height = fm.height();
-            //painter -> drawText(x_pos - font_width/2, area_y2 + font_height, ss);
+#ifdef ROTATE_X_LABEL
+            painter -> save();
+            painter -> translate(x_pos - font_width/2, area_y2 + 0.6*font_height);
+            painter -> rotate(45);
+            painter -> drawText(0, 0, ss);
+            painter -> restore();
+#else
+            painter -> drawText(x_pos - font_width/2, area_y2 + font_height, ss);
+#endif
         }
         x_pos = area_x1 + x_w * (i + 1.0);
         i = i + 1.0;

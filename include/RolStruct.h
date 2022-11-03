@@ -26,6 +26,10 @@ enum class Bank_TagID
     MPD_SSP = 10, //3561,//10
 };
 
+const int Fec_Bank_Tag[] = {
+    5, 8, 9, 10, 11, 12, 57631
+};
+
 ////////////////////////////////////////////////////////////////
 // MPD VME data type identifer
 //

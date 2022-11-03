@@ -5,6 +5,7 @@
 #include "EventParser.h"
 #include "MPDVMERawEventDecoder.h"
 #include "MPDSSPRawEventDecoder.h"
+#include "SRSRawEventDecoder.h"
 
 #include <string>
 #include <vector>
@@ -32,6 +33,7 @@ private:
     EventParser *event_parser;
     MPDSSPRawEventDecoder *mpd_ssp_decoder;
     MPDVMERawEventDecoder *mpd_vme_decoder;
+    SRSRawEventDecoder *srs_decoder;
 
     std::string input_file;
     const uint32_t *pBuf;

@@ -9,6 +9,7 @@
 using namespace std;
 
 #define APV_MIN_LENGTH 64
+//#define REMOVE_APV_HEADER
 
 SRSRawEventDecoder::SRSRawEventDecoder()
 {
@@ -123,10 +124,13 @@ void SRSRawEventDecoder::decode_impl(unsigned int *buf, int &n, vector<int> &apv
                 APVAddress addr(nCrateID, nFECID, nADCCh);
                 if(mAPVRawSingleEvent.find(addr) == mAPVRawSingleEvent.end())
                 {
-                    //mAPVRawSingleEvent[addr] = apv;
+#ifdef REMOVE_APV_HEADER
                     auto tmp = cleanup_srs_apv_header_words(apv);
                     if(tmp.size() == 774)
                         mAPVRawSingleEvent[addr] = tmp;
+#else
+                    mAPVRawSingleEvent[addr] = apv;
+#endif
                     flags.SetAPVAddress(addr);
                     mAPVDataFlags[addr] = flags;
                 }
@@ -156,10 +160,13 @@ void SRSRawEventDecoder::decode_impl(unsigned int *buf, int &n, vector<int> &apv
                     APVAddress addr(nCrateID, nFECID, nADCCh);
                     if(mAPVRawSingleEvent.find(addr) == mAPVRawSingleEvent.end())
                     {
-                        //mAPVRawSingleEvent[addr] = apv;
+#ifdef REMOVE_APV_HEADER
                         auto tmp = cleanup_srs_apv_header_words(apv);
                         if(tmp.size() == 774)
                             mAPVRawSingleEvent[addr] = tmp;
+#else
+                        mAPVRawSingleEvent[addr] = apv;
+#endif
                         flags.SetAPVAddress(addr);
                         mAPVDataFlags[addr] = flags;
                     }

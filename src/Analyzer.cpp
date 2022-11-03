@@ -31,6 +31,12 @@ void Analyzer::Init()
         event_parser -> RegisterRawDecoder(static_cast<int>(Bank_TagID::MPD_VME), mpd_vme_decoder);
 #endif
 
+#ifdef USE_SRS
+        srs_decoder = new SRSRawEventDecoder();
+        for(auto &i: Fec_Bank_Tag)
+            event_parser -> RegisterRawDecoder(i, srs_decoder);
+#endif
+
     file_is_open = false;
 }
 
@@ -71,6 +77,10 @@ std::unordered_map<APVAddress, std::vector<int>> Analyzer::GetEvent()
 #ifdef USE_VME
         const std::unordered_map<APVAddress, std::vector<int>> & res_dec 
             = mpd_vme_decoder -> GetAPV();
+#endif
+#ifdef USE_SRS
+        const std::unordered_map<APVAddress, std::vector<int>> & res_dec 
+            = srs_decoder -> GetAPV();
 #endif
 
     return res_dec;

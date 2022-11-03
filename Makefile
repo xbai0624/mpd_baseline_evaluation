@@ -66,7 +66,8 @@ SOURCES       = src/EvioFileReader.cpp \
 		src/HistoWidget.cpp \
 		src/GEMReplay.cpp \
 		src/APVStripMapping.cpp \
-		src/Globals.cpp moc/moc_Viewer.cpp \
+		src/Globals.cpp \
+		src/SRSRawEventDecoder.cpp moc/moc_Viewer.cpp \
 		moc/moc_HistoWidget.cpp
 OBJECTS       = obj/EvioFileReader.o \
 		obj/EventParser.o \
@@ -83,6 +84,7 @@ OBJECTS       = obj/EvioFileReader.o \
 		obj/GEMReplay.o \
 		obj/APVStripMapping.o \
 		obj/Globals.o \
+		obj/SRSRawEventDecoder.o \
 		obj/moc_Viewer.o \
 		obj/moc_HistoWidget.o
 DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
@@ -179,7 +181,8 @@ DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		include/APVStripMapping.h \
 		include/GEMStruct.h \
 		include/ConfigSetup.h \
-		include/Globals.h src/EvioFileReader.cpp \
+		include/Globals.h \
+		include/SRSRawEventDecoder.h src/EvioFileReader.cpp \
 		src/EventParser.cpp \
 		src/MPDVMERawEventDecoder.cpp \
 		src/MPDSSPRawEventDecoder.cpp \
@@ -193,7 +196,8 @@ DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		src/HistoWidget.cpp \
 		src/GEMReplay.cpp \
 		src/APVStripMapping.cpp \
-		src/Globals.cpp
+		src/Globals.cpp \
+		src/SRSRawEventDecoder.cpp
 QMAKE_TARGET  = raw_data_viewer
 DESTDIR       = 
 TARGET        = raw_data_viewer
@@ -375,8 +379,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /../lib64/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents include/EvioFileReader.h include/EventParser.h include/GeneralEvioStruct.h include/MPDVMERawEventDecoder.h include/MPDSSPRawEventDecoder.h include/RolStruct.h include/MPDDataStruct.h include/AbstractRawDecoder.h include/sspApvdec.h include/Viewer.h include/Analyzer.h include/HistoItem.h include/HistoView.h include/HistoWidget.h include/GEMReplay.h include/APVStripMapping.h include/GEMStruct.h include/ConfigSetup.h include/Globals.h $(DISTDIR)/
-	$(COPY_FILE) --parents src/EvioFileReader.cpp src/EventParser.cpp src/MPDVMERawEventDecoder.cpp src/MPDSSPRawEventDecoder.cpp src/AbstractRawDecoder.cpp src/MPDDataStruct.cpp src/main.cpp src/Viewer.cpp src/Analyzer.cpp src/HistoItem.cpp src/HistoView.cpp src/HistoWidget.cpp src/GEMReplay.cpp src/APVStripMapping.cpp src/Globals.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents include/EvioFileReader.h include/EventParser.h include/GeneralEvioStruct.h include/MPDVMERawEventDecoder.h include/MPDSSPRawEventDecoder.h include/RolStruct.h include/MPDDataStruct.h include/AbstractRawDecoder.h include/sspApvdec.h include/Viewer.h include/Analyzer.h include/HistoItem.h include/HistoView.h include/HistoWidget.h include/GEMReplay.h include/APVStripMapping.h include/GEMStruct.h include/ConfigSetup.h include/Globals.h include/SRSRawEventDecoder.h $(DISTDIR)/
+	$(COPY_FILE) --parents src/EvioFileReader.cpp src/EventParser.cpp src/MPDVMERawEventDecoder.cpp src/MPDSSPRawEventDecoder.cpp src/AbstractRawDecoder.cpp src/MPDDataStruct.cpp src/main.cpp src/Viewer.cpp src/Analyzer.cpp src/HistoItem.cpp src/HistoView.cpp src/HistoWidget.cpp src/GEMReplay.cpp src/APVStripMapping.cpp src/Globals.cpp src/SRSRawEventDecoder.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -421,10 +425,10 @@ moc/moc_Viewer.cpp: include/Viewer.h \
 		include/MPDVMERawEventDecoder.h \
 		include/RolStruct.h \
 		include/MPDSSPRawEventDecoder.h \
-		include/GEMPedestal.h \
-		include/GEMStruct.h \
+		include/SRSRawEventDecoder.h \
 		include/GEMReplay.h \
 		include/APVStripMapping.h \
+		include/GEMStruct.h \
 		include/HistoWidget.h \
 		include/HistoView.h \
 		include/HistoItem.h \
@@ -497,10 +501,10 @@ obj/main.o: src/main.cpp include/Viewer.h \
 		include/MPDVMERawEventDecoder.h \
 		include/RolStruct.h \
 		include/MPDSSPRawEventDecoder.h \
-		include/GEMPedestal.h \
-		include/GEMStruct.h \
+		include/SRSRawEventDecoder.h \
 		include/GEMReplay.h \
 		include/APVStripMapping.h \
+		include/GEMStruct.h \
 		include/HistoWidget.h \
 		include/HistoView.h \
 		include/HistoItem.h \
@@ -517,16 +521,15 @@ obj/Viewer.o: src/Viewer.cpp include/Viewer.h \
 		include/MPDVMERawEventDecoder.h \
 		include/RolStruct.h \
 		include/MPDSSPRawEventDecoder.h \
-		include/GEMPedestal.h \
-		include/GEMStruct.h \
+		include/SRSRawEventDecoder.h \
 		include/GEMReplay.h \
 		include/APVStripMapping.h \
+		include/GEMStruct.h \
 		include/HistoWidget.h \
 		include/HistoView.h \
 		include/HistoItem.h \
 		include/ConfigSetup.h \
-		include/Globals.h \
-		include/PedestalQualityCheck.h
+		include/Globals.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Viewer.o src/Viewer.cpp
 
 obj/Analyzer.o: src/Analyzer.cpp include/Analyzer.h \
@@ -538,10 +541,8 @@ obj/Analyzer.o: src/Analyzer.cpp include/Analyzer.h \
 		include/MPDVMERawEventDecoder.h \
 		include/RolStruct.h \
 		include/MPDSSPRawEventDecoder.h \
-		include/GEMPedestal.h \
-		include/GEMStruct.h \
-		include/ConfigSetup.h \
-		include/PedestalQualityCheck.h
+		include/SRSRawEventDecoder.h \
+		include/ConfigSetup.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Analyzer.o src/Analyzer.cpp
 
 obj/HistoItem.o: src/HistoItem.cpp include/HistoItem.h
@@ -567,6 +568,11 @@ obj/APVStripMapping.o: src/APVStripMapping.cpp include/APVStripMapping.h \
 
 obj/Globals.o: src/Globals.cpp include/Globals.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Globals.o src/Globals.cpp
+
+obj/SRSRawEventDecoder.o: src/SRSRawEventDecoder.cpp include/SRSRawEventDecoder.h \
+		include/MPDDataStruct.h \
+		include/AbstractRawDecoder.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/SRSRawEventDecoder.o src/SRSRawEventDecoder.cpp
 
 obj/moc_Viewer.o: moc/moc_Viewer.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/moc_Viewer.o moc/moc_Viewer.cpp
