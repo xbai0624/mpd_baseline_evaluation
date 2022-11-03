@@ -5,7 +5,6 @@
 #include "EventParser.h"
 #include "MPDVMERawEventDecoder.h"
 #include "MPDSSPRawEventDecoder.h"
-#include "GEMPedestal.h"
 
 #include <string>
 #include <vector>
@@ -33,8 +32,6 @@ private:
     EventParser *event_parser;
     MPDSSPRawEventDecoder *mpd_ssp_decoder;
     MPDVMERawEventDecoder *mpd_vme_decoder;
-
-    GEMPedestal *pedestal;
 
     std::string input_file;
     const uint32_t *pBuf;

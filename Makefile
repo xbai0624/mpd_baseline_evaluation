@@ -16,8 +16,8 @@ CC            = gcc
 CXX           = g++
 DEFINES       = -DQT_DEPRECATED_WARNINGS -DDEBUG -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 -D_REENTRANT -Wall -Wextra -fPIC $(DEFINES)
-CXXFLAGS      = -pipe -std=c++17 -O2 -D_REENTRANT -Wall -Wextra -fPIC $(DEFINES)
-INCPATH       = -I. -I. -Iinclude -I${CODA}/common/include -I${ROOTSYS}/include -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -Imoc -I/../lib64/qt5/mkspecs/linux-g++
+CXXFLAGS      = -pipe -std=c++17 -O2 -std=gnu++11 -D_REENTRANT -Wall -Wextra -fPIC $(DEFINES)
+INCPATH       = -I. -I. -Iinclude -I${CODA}/common/include -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -Imoc -I/../lib64/qt5/mkspecs/linux-g++
 QMAKE         = /usr/bin/qmake-qt5
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -40,7 +40,7 @@ DISTNAME      = raw_data_viewer1.0.0
 DISTDIR = /home/xinzhan/test/mpd_baseline_evaluation/obj/raw_data_viewer1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-O1
-LIBS          = $(SUBLIBS) -L${CODA}/Linux-x86_64/lib -levio -L${ROOTSYS}/lib -lCore -lRIO -lNet -lHist -lGraf -lGraf3d -lGpad -lTree -lRint -lPostscript -lMatrix -lPhysics -lGui -lRGL /usr/lib64/libQt5Widgets.so /usr/lib64/libQt5Gui.so /usr/lib64/libQt5Core.so -lGL -lpthread   
+LIBS          = $(SUBLIBS) -L${CODA}/Linux-x86_64/lib -levio /usr/lib64/libQt5Widgets.so /usr/lib64/libQt5Gui.so /usr/lib64/libQt5Core.so -lGL -lpthread   
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -65,9 +65,7 @@ SOURCES       = src/EvioFileReader.cpp \
 		src/HistoView.cpp \
 		src/HistoWidget.cpp \
 		src/GEMReplay.cpp \
-		src/GEMPedestal.cpp \
 		src/APVStripMapping.cpp \
-		src/PedestalQualityCheck.cpp \
 		src/Globals.cpp moc/moc_Viewer.cpp \
 		moc/moc_HistoWidget.cpp
 OBJECTS       = obj/EvioFileReader.o \
@@ -83,9 +81,7 @@ OBJECTS       = obj/EvioFileReader.o \
 		obj/HistoView.o \
 		obj/HistoWidget.o \
 		obj/GEMReplay.o \
-		obj/GEMPedestal.o \
 		obj/APVStripMapping.o \
-		obj/PedestalQualityCheck.o \
 		obj/Globals.o \
 		obj/moc_Viewer.o \
 		obj/moc_HistoWidget.o
@@ -182,9 +178,7 @@ DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		include/GEMReplay.h \
 		include/APVStripMapping.h \
 		include/GEMStruct.h \
-		include/GEMPedestal.h \
 		include/ConfigSetup.h \
-		include/PedestalQualityCheck.h \
 		include/Globals.h src/EvioFileReader.cpp \
 		src/EventParser.cpp \
 		src/MPDVMERawEventDecoder.cpp \
@@ -198,9 +192,7 @@ DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		src/HistoView.cpp \
 		src/HistoWidget.cpp \
 		src/GEMReplay.cpp \
-		src/GEMPedestal.cpp \
 		src/APVStripMapping.cpp \
-		src/PedestalQualityCheck.cpp \
 		src/Globals.cpp
 QMAKE_TARGET  = raw_data_viewer
 DESTDIR       = 
@@ -383,8 +375,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /../lib64/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents include/EvioFileReader.h include/EventParser.h include/GeneralEvioStruct.h include/MPDVMERawEventDecoder.h include/MPDSSPRawEventDecoder.h include/RolStruct.h include/MPDDataStruct.h include/AbstractRawDecoder.h include/sspApvdec.h include/Viewer.h include/Analyzer.h include/HistoItem.h include/HistoView.h include/HistoWidget.h include/GEMReplay.h include/APVStripMapping.h include/GEMStruct.h include/GEMPedestal.h include/ConfigSetup.h include/PedestalQualityCheck.h include/Globals.h $(DISTDIR)/
-	$(COPY_FILE) --parents src/EvioFileReader.cpp src/EventParser.cpp src/MPDVMERawEventDecoder.cpp src/MPDSSPRawEventDecoder.cpp src/AbstractRawDecoder.cpp src/MPDDataStruct.cpp src/main.cpp src/Viewer.cpp src/Analyzer.cpp src/HistoItem.cpp src/HistoView.cpp src/HistoWidget.cpp src/GEMReplay.cpp src/GEMPedestal.cpp src/APVStripMapping.cpp src/PedestalQualityCheck.cpp src/Globals.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents include/EvioFileReader.h include/EventParser.h include/GeneralEvioStruct.h include/MPDVMERawEventDecoder.h include/MPDSSPRawEventDecoder.h include/RolStruct.h include/MPDDataStruct.h include/AbstractRawDecoder.h include/sspApvdec.h include/Viewer.h include/Analyzer.h include/HistoItem.h include/HistoView.h include/HistoWidget.h include/GEMReplay.h include/APVStripMapping.h include/GEMStruct.h include/ConfigSetup.h include/Globals.h $(DISTDIR)/
+	$(COPY_FILE) --parents src/EvioFileReader.cpp src/EventParser.cpp src/MPDVMERawEventDecoder.cpp src/MPDSSPRawEventDecoder.cpp src/AbstractRawDecoder.cpp src/MPDDataStruct.cpp src/main.cpp src/Viewer.cpp src/Analyzer.cpp src/HistoItem.cpp src/HistoView.cpp src/HistoWidget.cpp src/GEMReplay.cpp src/APVStripMapping.cpp src/Globals.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -414,7 +406,7 @@ compiler_moc_predefs_make_all: moc/moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) moc/moc_predefs.h
 moc/moc_predefs.h: /../lib64/qt5/mkspecs/features/data/dummy.cpp
-	g++ -pipe -std=c++17 -O2 -dM -E -o moc/moc_predefs.h /../lib64/qt5/mkspecs/features/data/dummy.cpp
+	g++ -pipe -std=c++17 -O2 -std=gnu++11 -dM -E -o moc/moc_predefs.h /../lib64/qt5/mkspecs/features/data/dummy.cpp
 
 compiler_moc_header_make_all: moc/moc_Viewer.cpp moc/moc_HistoWidget.cpp
 compiler_moc_header_clean:
@@ -439,7 +431,7 @@ moc/moc_Viewer.cpp: include/Viewer.h \
 		include/ConfigSetup.h \
 		moc/moc_predefs.h \
 		/../lib64/qt5/bin/moc
-	/../lib64/qt5/bin/moc $(DEFINES) --include /home/xinzhan/test/mpd_baseline_evaluation/moc/moc_predefs.h -I/../lib64/qt5/mkspecs/linux-g++ -I/home/xinzhan/test/mpd_baseline_evaluation -I/home/xinzhan/test/mpd_baseline_evaluation -I/home/xinzhan/test/mpd_baseline_evaluation/include -I'/home/xinzhan/test/mpd_baseline_evaluation/${CODA}/common/include' -I'/home/xinzhan/test/mpd_baseline_evaluation/${ROOTSYS}/include' -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I/usr/include/c++/4.8.5 -I/usr/include/c++/4.8.5/x86_64-redhat-linux -I/usr/include/c++/4.8.5/backward -I/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include -I/usr/local/include -I/usr/include include/Viewer.h -o moc/moc_Viewer.cpp
+	/../lib64/qt5/bin/moc $(DEFINES) --include /home/xinzhan/test/mpd_baseline_evaluation/moc/moc_predefs.h -I/../lib64/qt5/mkspecs/linux-g++ -I/home/xinzhan/test/mpd_baseline_evaluation -I/home/xinzhan/test/mpd_baseline_evaluation -I/home/xinzhan/test/mpd_baseline_evaluation/include -I'/home/xinzhan/test/mpd_baseline_evaluation/${CODA}/common/include' -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I/usr/include/c++/4.8.5 -I/usr/include/c++/4.8.5/x86_64-redhat-linux -I/usr/include/c++/4.8.5/backward -I/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include -I/usr/local/include -I/usr/include include/Viewer.h -o moc/moc_Viewer.cpp
 
 moc/moc_HistoWidget.cpp: include/HistoWidget.h \
 		include/HistoView.h \
@@ -448,7 +440,7 @@ moc/moc_HistoWidget.cpp: include/HistoWidget.h \
 		include/MPDDataStruct.h \
 		moc/moc_predefs.h \
 		/../lib64/qt5/bin/moc
-	/../lib64/qt5/bin/moc $(DEFINES) --include /home/xinzhan/test/mpd_baseline_evaluation/moc/moc_predefs.h -I/../lib64/qt5/mkspecs/linux-g++ -I/home/xinzhan/test/mpd_baseline_evaluation -I/home/xinzhan/test/mpd_baseline_evaluation -I/home/xinzhan/test/mpd_baseline_evaluation/include -I'/home/xinzhan/test/mpd_baseline_evaluation/${CODA}/common/include' -I'/home/xinzhan/test/mpd_baseline_evaluation/${ROOTSYS}/include' -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I/usr/include/c++/4.8.5 -I/usr/include/c++/4.8.5/x86_64-redhat-linux -I/usr/include/c++/4.8.5/backward -I/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include -I/usr/local/include -I/usr/include include/HistoWidget.h -o moc/moc_HistoWidget.cpp
+	/../lib64/qt5/bin/moc $(DEFINES) --include /home/xinzhan/test/mpd_baseline_evaluation/moc/moc_predefs.h -I/../lib64/qt5/mkspecs/linux-g++ -I/home/xinzhan/test/mpd_baseline_evaluation -I/home/xinzhan/test/mpd_baseline_evaluation -I/home/xinzhan/test/mpd_baseline_evaluation/include -I'/home/xinzhan/test/mpd_baseline_evaluation/${CODA}/common/include' -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I/usr/include/c++/4.8.5 -I/usr/include/c++/4.8.5/x86_64-redhat-linux -I/usr/include/c++/4.8.5/backward -I/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include -I/usr/local/include -I/usr/include include/HistoWidget.h -o moc/moc_HistoWidget.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -568,27 +560,10 @@ obj/HistoWidget.o: src/HistoWidget.cpp include/HistoWidget.h \
 obj/GEMReplay.o: src/GEMReplay.cpp include/GEMReplay.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/GEMReplay.o src/GEMReplay.cpp
 
-obj/GEMPedestal.o: src/GEMPedestal.cpp include/GEMPedestal.h \
-		include/MPDDataStruct.h \
-		include/GEMStruct.h \
-		include/EvioFileReader.h \
-		include/EventParser.h \
-		include/GeneralEvioStruct.h \
-		include/AbstractRawDecoder.h \
-		include/MPDVMERawEventDecoder.h \
-		include/RolStruct.h \
-		include/MPDSSPRawEventDecoder.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/GEMPedestal.o src/GEMPedestal.cpp
-
 obj/APVStripMapping.o: src/APVStripMapping.cpp include/APVStripMapping.h \
 		include/GEMStruct.h \
 		include/MPDDataStruct.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/APVStripMapping.o src/APVStripMapping.cpp
-
-obj/PedestalQualityCheck.o: src/PedestalQualityCheck.cpp include/Globals.h \
-		include/PedestalQualityCheck.h \
-		include/MPDDataStruct.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/PedestalQualityCheck.o src/PedestalQualityCheck.cpp
 
 obj/Globals.o: src/Globals.cpp include/Globals.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Globals.o src/Globals.cpp

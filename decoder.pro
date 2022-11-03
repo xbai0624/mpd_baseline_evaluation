@@ -21,12 +21,12 @@ INCLUDEPATH += ${CODA}/common/include
 LIBS += -L${CODA}/Linux-x86_64/lib -levio
 
 # root headers
-INCLUDEPATH += ${ROOTSYS}/include
+#INCLUDEPATH += ${ROOTSYS}/include
 # root libs
-LIBS += -L${ROOTSYS}/lib -lCore -lRIO -lNet \
-	-lHist -lGraf -lGraf3d -lGpad -lTree \
-    -lRint -lPostscript -lMatrix -lPhysics \
-	-lGui -lRGL
+#LIBS += -L${ROOTSYS}/lib -lCore -lRIO -lNet \
+#	-lHist -lGraf -lGraf3d -lGpad -lTree \
+#    -lRint -lPostscript -lMatrix -lPhysics \
+#	-lGui -lRGL
 
 MOC_DIR = moc
 OBJECTS_DIR = obj
@@ -60,9 +60,7 @@ HEADERS += include/EvioFileReader.h \
            include/GEMReplay.h \
            include/APVStripMapping.h \
            include/GEMStruct.h \
-           include/GEMPedestal.h \
            include/ConfigSetup.h \
-           include/PedestalQualityCheck.h \
            include/Globals.h \
 
 SOURCES += src/EvioFileReader.cpp \ 
@@ -78,7 +76,5 @@ SOURCES += src/EvioFileReader.cpp \
            src/HistoView.cpp \
            src/HistoWidget.cpp \
            src/GEMReplay.cpp \
-           src/GEMPedestal.cpp \
            src/APVStripMapping.cpp \
-           src/PedestalQualityCheck.cpp \
            src/Globals.cpp \

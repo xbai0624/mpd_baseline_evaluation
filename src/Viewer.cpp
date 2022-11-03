@@ -2,7 +2,6 @@
 #include "ConfigSetup.h"
 
 #include "Globals.h"
-#include "PedestalQualityCheck.h"
 
 #include <QGraphicsRectItem>
 #include <QSpinBox>

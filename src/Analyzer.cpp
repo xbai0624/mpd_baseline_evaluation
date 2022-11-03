@@ -1,6 +1,5 @@
 #include "Analyzer.h"
 #include "ConfigSetup.h"
-#include "PedestalQualityCheck.h"
 
 #include <iostream>
 #include <fstream>
@@ -21,8 +20,6 @@ void Analyzer::Init()
 {
     file_reader = new EvioFileReader();
     event_parser = new EventParser();
-
-    pedestal = new GEMPedestal();
 
 #ifdef USE_SSP
         mpd_ssp_decoder = new MPDSSPRawEventDecoder();
@@ -109,8 +106,6 @@ void Analyzer::GeneratePedestal([[maybe_unused]]const char* path)
     */
     // 2): common mode quality check
 
-    // delete last replay from pedestal check
-    PedestalQualityCheck::Instance() -> Init();
 
     [[maybe_unused]] static int counter = 0;
     while( file_reader -> ReadNoCopy(&pBuf, &fBufLen) == S_SUCCESS)
@@ -134,12 +129,7 @@ void Analyzer::GeneratePedestal([[maybe_unused]]const char* path)
             timing = mpd_vme_decoder -> GetTiming();
 #endif
 
-        // check pedestal quality
-        PedestalQualityCheck::Instance() -> FillEvent(res_dec, timing);
     }
-
-    // save pedestal quality check results
-    PedestalQualityCheck::Instance() -> Save();
 }
 
 void Analyzer::CloseFile()

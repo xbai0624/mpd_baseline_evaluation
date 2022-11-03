@@ -3,8 +3,6 @@
  */
 
 #include <QApplication>
-#include <TApplication.h>
-
 #include "Viewer.h"
 
 ////////////////////////////////////////////////////////////////
@@ -13,7 +11,6 @@
 int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 {
     QApplication app(argc, argv);
-    TApplication root_app("root", &argc, argv);
 
     Viewer *viewer = new Viewer();
     viewer -> resize(1500, 850);
