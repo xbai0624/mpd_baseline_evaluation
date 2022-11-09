@@ -111,7 +111,7 @@ void SRSRawEventDecoder::DecodeFEC(const vector<unsigned int> &buffer)
 
 void SRSRawEventDecoder::decode_impl(unsigned int *buf, int &n, vector<int> &apv)
 {
-    //SwitchEndianess(buf, n);
+    SwitchEndianess(buf, n);
 
     bool channel_active = true;
 
