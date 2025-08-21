@@ -11,14 +11,8 @@ QT += core gui widgets
 QMAKE_CXXFLAGS += -std=c++17
 QMAKE_CXXFLAGS -= -std=gnu++11
 
-
 # self headers
-INCLUDEPATH += . ./include
-
-# coda headers
-INCLUDEPATH += ${CODA}/common/include
-# coda libs
-LIBS += -L${CODA}/Linux-x86_64/lib -levio
+INCLUDEPATH += . ./include ./third_party/evio-5.2
 
 # root headers
 INCLUDEPATH += ${ROOTSYS}/include
@@ -82,3 +76,13 @@ SOURCES += src/EvioFileReader.cpp \
            src/APVStripMapping.cpp \
            src/PedestalQualityCheck.cpp \
            src/Globals.cpp \
+
+# evio source files
+HEADERS += third_party/evio-5.2/evio.h \
+           third_party/evio-5.2/msinttypes.h \
+
+SOURCES += third_party/evio-5.2/evio.c \
+           third_party/evio-5.2/eviofmt.c \
+           third_party/evio-5.2/eviofmtdump.c \
+           third_party/evio-5.2/eviofmtswap.c \
+           third_party/evio-5.2/evioswap.c \
